@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using finhelp_back.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace finhelp_back.Controllers
@@ -10,6 +11,11 @@ namespace finhelp_back.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        public ValuesController(AuthenticationContext context)
+        {
+
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()

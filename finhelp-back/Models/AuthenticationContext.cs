@@ -16,6 +16,8 @@ namespace finhelp_back.Models
 
         }
 
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
         #endregion
     }
 }
