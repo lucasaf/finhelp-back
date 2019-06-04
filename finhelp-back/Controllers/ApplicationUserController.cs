@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using finhelp_back.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using finhelp_back.Models;
 
 namespace finhelp_back.Controllers
 {
@@ -25,18 +25,18 @@ namespace finhelp_back.Controllers
         [HttpPost]
         [Route("Register")]
         //POST : /api/ApplicationUser/Register
-        public object PostApplicationUser(ApplicationUserModel model)
+        public async Task<object> PostApplicationUserAsync(ApplicationUserModel model)
         {
             var applicationUser = new ApplicationUser()
             {
-                UserName = model.user_name,
-                Email = model.email,
-                FullName = model.full_name
+                UserName = model.UserName,
+                Email = model.Email,
+                FullName = model.FullName
             };
 
             try
             {
-                var result = _userManager.CreateAsync(applicationUser, model.password);
+                var result = await _userManager.CreateAsync(applicationUser, model.Password);
                 return Ok(result);
             }
             catch (Exception)

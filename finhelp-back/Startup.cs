@@ -37,6 +37,8 @@ namespace finhelp_back
 
             services.Configure<IdentityOptions>(options =>
             {
+                options.User.AllowedUserNameCharacters = null;
+                options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
