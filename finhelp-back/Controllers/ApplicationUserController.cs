@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using finhelp_back.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace finhelp_back.Controllers
 {
@@ -43,6 +47,34 @@ namespace finhelp_back.Controllers
             {
                 throw;
             }
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        //POST : /api/ApplicationUser/Login
+        public async Task<IActionResult> Login(LoginModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            {
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim("User.ID", user.Id.ToString())
+                    }),
+
+                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890123456")), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var tokenHandle = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandle.CreateToken(tokenDescriptor);
+                var token = tokenHandle.WriteToken(securityToken);
+
+                return Ok(new { token });
+            }
+            else
+                return BadRequest(new { message = "Usuário ou senha incorretos." });
         }
     }
 }
