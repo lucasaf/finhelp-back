@@ -11,7 +11,7 @@ namespace finhelp_back.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        public ValuesController(AuthenticationContext context)
+        public ValuesController(PersistContext context)
         {
 
         }

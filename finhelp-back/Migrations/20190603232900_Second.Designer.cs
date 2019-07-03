@@ -9,7 +9,7 @@ using finhelp_back.Models;
 
 namespace finhelp_back.Migrations
 {
-    [DbContext(typeof(AuthenticationContext))]
+    [DbContext(typeof(PersistContext))]
     [Migration("20190603232900_Second")]
     partial class Second
     {

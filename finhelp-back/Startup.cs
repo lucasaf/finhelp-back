@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using finhelp_back.Models;
+using finhelp_back.Models.Categories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,11 +36,11 @@ namespace finhelp_back
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<AuthenticationContext>(options =>
+            services.AddDbContext<PersistContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<AuthenticationContext>();
+                .AddEntityFrameworkStores<PersistContext>();
 
             services.Configure<IdentityOptions>(options =>
             {
